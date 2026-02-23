@@ -14,8 +14,8 @@ inspired by: [Turborepo](https://turborepo.dev/)
 * Live log viewer for selected workspace
 * Restart selected workspace (`r`)
 * Stop selected workspace (`s`)
-* **Lint dependencies in overlay (`l`)**
-* **Fix dependency mismatches in overlay (`f`)**
+* Lint dependencies in overlay (`l`)
+* Fix dependency mismatches in overlay (`f`)
 * Quit instantly (`q` or `Ctrl+C`)
 * Auto-detects Bun workspaces from `package.json`
 * Running status indicators (● running / — stopped)
@@ -35,6 +35,7 @@ inspired by: [Turborepo](https://turborepo.dev/)
 ```bash
 bun add -d bun-wtui
 ```
+> recommended to add -d flag as *devDependencies*
 
 Add this to your root `package.json`:
 
@@ -56,45 +57,16 @@ bun run dev
 
 ## CLI Commands
 
-### Start TUI Dashboard (default)
-
 ```bash
-bun-wtui
-# or
-bun-wtui tui
+bun-wtui {commands}
 ```
 
-### Lint Dependencies
+`help`: Show command flags <br>
+`tui`: Show deafult tui <br>
+`lint`: List workspaces dependencies issues <br>
+`fix`: Fix workspaces dependencies issues <br>
 
-Scans all dependencies and devDependencies for version mismatches and issues:
 
-```bash
-bun-wtui lint
-```
-
-This runs `syncpack lint --dependency-types prod,dev` to check for:
-- Version mismatches across workspaces
-- Semver violations
-- Dependency inconsistencies
-
-### Fix Dependencies
-
-Automatically fixes dependency version mismatches across workspaces:
-
-```bash
-bun-wtui fix
-```
-
-This runs `syncpack fix-mismatches --dependency-types prod,dev` to:
-- Align dependency versions across all workspaces
-- Fix semver range inconsistencies
-- Update package.json files automatically
-
-### Help
-
-```bash
-bun-wtui help
-```
 
 ---
 
@@ -107,6 +79,7 @@ BunTUI:
 3. Lists them in a sidebar
 4. Runs `bun run dev` inside the selected workspace
 5. Streams logs to the right panel
+6. Lint and Fix dependencies issue comes from `syncpack`
 
 No extra config required.
 
@@ -185,17 +158,17 @@ Minimal. Focused. Fast.
 Build locally:
 
 ```bash
-bun run build
+bun run build && bun link
 ```
 
-Test globally:
+Test:
 
 ```bash
-bun install -g .
+bun link bun-wtui
 ```
 
 Run:
 
 ```bash
-bun-wtui
+bun bun-wtui
 ```

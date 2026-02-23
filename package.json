@@ -11,6 +11,7 @@
     "dist"
   ],
   "scripts": {
+    "test": "bun run build && bun link",
     "build": "bun build src/index.ts --outfile dist/index.js --target bun --external blessed && chmod +x dist/index.js",
     "prepublishOnly": "bun run build"
   },
