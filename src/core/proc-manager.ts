@@ -1,5 +1,6 @@
 import { spawn } from "bun";
 import type { WorkspaceProcess, ProcessManagerScript, WorkspaceName, WorkspacePath } from "./types";
+import { getConfig } from "./config";
 
 export class ProcessManager {
   private processes: Map<WorkspaceName, WorkspaceProcess> = new Map();
@@ -51,13 +52,21 @@ export class ProcessManager {
 
     const reader = stream.getReader();
     const decoder = new TextDecoder();
+    const config = getConfig();
 
     try {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         
-        const text = decoder.decode(value, { stream: true });
+        let text = decoder.decode(value, { stream: true });
+        
+        // Add timestamps if enabled
+        if (config.ui.showTimestamps && text.trim()) {
+          const timestamp = new Date().toLocaleTimeString();
+          text = `[${timestamp}] ${text}`;
+        }
+        
         wp.buffer.push(text);
         
         // Limit buffer size to prevent memory leak

@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { getConfig } from "./config";
 
 export function getWorkspaces(): string[] {
   const root = process.cwd();
@@ -11,13 +12,14 @@ export function getWorkspaces(): string[] {
 
   const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
   const workspaces = pkg.workspaces || [];
+  const config = getConfig();
 
   const expanded: string[] = [];
 
   for (const pattern of workspaces) {
     const matches = expandGlob(root, pattern);
     for (const match of matches) {
-      if (isValidWorkspace(root, match)) {
+      if (isValidWorkspace(root, match) && !config.workspace.excludeWorkspaces.includes(match)) {
         expanded.push(match);
       }
     }

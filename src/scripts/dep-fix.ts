@@ -1,6 +1,10 @@
+import { getConfig } from "../core/config";
+
 // Spawn syncpack fix process with piped output for TUI
 export function spawnFixProcess() {
-  return Bun.spawn(["bunx", "syncpack", "lint", "--dependency-types", "prod,dev"], {
+  const config = getConfig();
+  const depTypes = config.syncpack.dependencyTypes.join(",");
+  return Bun.spawn(["bunx", "syncpack", "lint", "--dependency-types", depTypes], {
     stdout: "pipe",
     stderr: "pipe",
     cwd: process.cwd(),
@@ -11,8 +15,10 @@ export function spawnFixProcess() {
 export async function runFix() {
   try {
     console.log("🔧 Fixing dependency mismatches...\n");
+    const config = getConfig();
+    const depTypes = config.syncpack.dependencyTypes.join(",");
     
-    const proc = Bun.spawn(["bunx", "syncpack", "lint", "--dependency-types", "prod,dev"], {
+    const proc = Bun.spawn(["bunx", "syncpack", "lint", "--dependency-types", depTypes], {
       stdout: "inherit",
       stderr: "inherit",
       cwd: process.cwd(),

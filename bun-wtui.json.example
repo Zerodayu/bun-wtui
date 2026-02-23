@@ -1,0 +1,20 @@
+{
+  "ui": {
+    "theme": "dark",
+    "minWidthForLandscape": 80,
+    "sidebarWidth": 25,
+    "showTimestamps": false
+  },
+  "workspace": {
+    "excludeWorkspaces": [],
+    "autoDetectWorkspaces": true
+  },
+  "syncpack": {
+    "dependencyTypes": ["prod", "dev"],
+    "autoLintOnStart": false
+  },
+  "behavior": {
+    "logLevel": "normal",
+    "rememberLastWorkspace": false
+  }
+}

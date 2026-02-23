@@ -101,6 +101,54 @@ No extra config required.
 
 ---
 
+## Configuration (Optional)
+
+BunTUI works with zero configuration, but you can customize behavior by creating a config file in your project root:
+
+- `bun-wtui.json`
+- `.bun-wtui.json`
+- `config/bun-wtui.json`
+
+**Example configuration:**
+
+```json
+{
+  "ui": {
+    "theme": "dark",
+    "minWidthForLandscape": 80,
+    "sidebarWidth": 25,
+    "showTimestamps": false
+  },
+  "workspace": {
+    "excludeWorkspaces": [],
+    "autoDetectWorkspaces": true
+  },
+  "syncpack": {
+    "dependencyTypes": ["prod", "dev"],
+    "autoLintOnStart": false
+  },
+  "behavior": {
+    "logLevel": "normal", // "verbose" | "normal" | "quiet"
+    "rememberLastWorkspace": false
+  }
+}
+```
+
+**Config Options:**
+
+| Option | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| `ui.minWidthForLandscape` | number | 80 | Terminal width threshold for side-by-side layout |
+| `ui.sidebarWidth` | number | 25 | Sidebar width percentage in landscape mode |
+| `ui.showTimestamps` | boolean | false | Add timestamps to log entries |
+| `workspace.excludeWorkspaces` | string[] | [] | Workspace paths to hide from sidebar |
+| `syncpack.dependencyTypes` | string[] | ["prod", "dev"] | Dependency types to check |
+| `behavior.logLevel` | string | "normal" | Log verbosity (verbose/normal/quiet) |
+
+See [bun-wtui.json.example](./bun-wtui.json.example) for a complete example.
+
+---
+
 ## Supported Workspace Format
 
 Example:
@@ -147,7 +195,7 @@ Minimal. Focused. Fast.
 ## Roadmap
 
 * [ ] Memory usage display
-* [ ] Config file support
+* [x] Config file support
 * [ ] Custom script flag (`--script build`)
 * [ ] Tree-style workspace explorer
 
@@ -162,6 +210,7 @@ bun run test
 ```
 
 Test:
+> run this on a sandbox project
 
 ```bash
 bun link bun-wtui

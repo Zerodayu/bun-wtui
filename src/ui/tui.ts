@@ -3,14 +3,16 @@ import { ProcessManager } from "../core/proc-manager";
 import type { WorkspaceList } from "../core/types";
 import { spawnLintProcess } from "../scripts/lint";
 import { spawnFixProcess } from "../scripts/dep-fix";
+import { getConfig } from "../core/config";
 
 export function createTUI(workspaces: WorkspaceList): void {
+  const config = getConfig();
   const screen = blessed.screen({
     smartCSR: true,
     title: "BunWtui"
   });
 
-  const MIN_WIDTH_FOR_LANDSCAPE = 80;
+  const MIN_WIDTH_FOR_LANDSCAPE = config.ui.minWidthForLandscape;
 
   const sidebar = blessed.list({
     label: " Workspaces ",
@@ -72,14 +74,14 @@ export function createTUI(workspaces: WorkspaceList): void {
     
     if (width >= MIN_WIDTH_FOR_LANDSCAPE) {
       // Landscape mode: side by side
-      sidebar.width = "25%";
+      sidebar.width = `${config.ui.sidebarWidth}%`;
       sidebar.height = "100%-1";
       sidebar.left = 0;
       sidebar.top = 0;
       
-      logs.left = "25%";
+      logs.left = `${config.ui.sidebarWidth}%`;
       logs.top = 0;
-      logs.width = "75%";
+      logs.width = `${100 - config.ui.sidebarWidth}%`;
       logs.height = "100%-1";
     } else {
       // Portrait mode: stacked vertically
