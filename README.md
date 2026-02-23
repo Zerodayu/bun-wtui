@@ -22,22 +22,6 @@ BunTUI is a lightweight terminal UI that lets you navigate your monorepo workspa
 
 ## Installation
 
-### Option 1 — Install Globally
-
-```bash
-bun install -g bun-wtui
-```
-
-Then run:
-
-```bash
-bun-wtui
-```
-
----
-
-### Option 2 — Install Per Project
-
 ```bash
 bun add -d bun-wtui
 ```
