@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@types/blessed": "^0.1.27",
-    "blessed": "^0.1.81"
+    "blessed": "^0.1.81",
+    "syncpack": "^14.0.0"
   }
 }

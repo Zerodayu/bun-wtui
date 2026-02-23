@@ -19,6 +19,7 @@ inspired by: [Turborepo](https://turborepo.dev/)
 * Running status indicators (● running / — stopped)
 * ▌ Active workspace indicator
 * Works with any Bun monorepo
+* Dependency linting and auto-fixing via syncpack integration
 
 ---
 
@@ -47,6 +48,50 @@ Then run:
 
 ```bash
 bun run dev
+```
+
+---
+
+## CLI Commands
+
+### Start TUI Dashboard (default)
+
+```bash
+bun-wtui
+# or
+bun-wtui tui
+```
+
+### Lint Dependencies
+
+Scans all dependencies and devDependencies for version mismatches and issues:
+
+```bash
+bun-wtui lint
+```
+
+This runs `syncpack lint --dependency-types prod,dev` to check for:
+- Version mismatches across workspaces
+- Semver violations
+- Dependency inconsistencies
+
+### Fix Dependencies
+
+Automatically fixes dependency version mismatches across workspaces:
+
+```bash
+bun-wtui fix
+```
+
+This runs `syncpack fix-mismatches --dependency-types prod,dev` to:
+- Align dependency versions across all workspaces
+- Fix semver range inconsistencies
+- Update package.json files automatically
+
+### Help
+
+```bash
+bun-wtui help
 ```
 
 ---
