@@ -1,18 +1,33 @@
 #!/usr/bin/env bun
 
-import { getWorkspaces } from "./core/workspace";
-import { createTUI } from "./ui/tui";
+import { runLint } from "./scripts/lint";
+import { runFix } from "./scripts/fix";
+import { showHelp } from "./scripts/help";
+import { startTUI } from "./scripts/start-tui";
 
-try {
-  const workspaces = getWorkspaces();
+const args = process.argv.slice(2);
+const command = args[0];
 
-  if (workspaces.length === 0) {
-    console.error("No workspaces found.");
-    process.exit(1);
-  }
+// Command map
+const commands: Record<string, () => void | Promise<void>> = {
+  lint: runLint,
+  fix: runFix,
+  help: showHelp,
+  "--help": showHelp,
+  "-h": showHelp,
+  tui: startTUI,
+};
 
-  createTUI(workspaces);
-} catch (err: any) {
-  console.error("Error:", err.message);
+// Execute command
+const handler = command ? commands[command] : undefined;
+
+if (handler) {
+  await handler();
+} else if (command) {
+  console.error(`Unknown command: ${command}`);
+  console.error('Run "bun-wtui help" for usage information.');
   process.exit(1);
+} else {
+  // Default: Start TUI
+  startTUI();
 }
