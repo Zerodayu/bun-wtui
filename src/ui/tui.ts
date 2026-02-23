@@ -8,10 +8,10 @@ export function createTUI(workspaces: WorkspaceList): void {
     title: "BunTUI"
   });
 
+  const MIN_WIDTH_FOR_LANDSCAPE = 80;
+
   const sidebar = blessed.list({
     label: " Workspaces ",
-    width: "25%",
-    height: "100%",
     keys: true,
     vi: true,
     border: "line",
@@ -22,9 +22,6 @@ export function createTUI(workspaces: WorkspaceList): void {
 
   const logs = blessed.box({
     label: " Logs ",
-    left: "25%",
-    width: "75%",
-    height: "100%",
     border: "line",
     scrollable: true,
     alwaysScroll: true
@@ -32,6 +29,45 @@ export function createTUI(workspaces: WorkspaceList): void {
 
   screen.append(sidebar);
   screen.append(logs);
+
+  // Function to update layout based on screen width
+  function updateLayout() {
+    const width = typeof screen.width === 'number' ? screen.width : parseInt(screen.width as string, 10);
+    
+    if (width >= MIN_WIDTH_FOR_LANDSCAPE) {
+      // Landscape mode: side by side
+      sidebar.width = "25%";
+      sidebar.height = "100%";
+      sidebar.left = 0;
+      sidebar.top = 0;
+      
+      logs.left = "25%";
+      logs.top = 0;
+      logs.width = "75%";
+      logs.height = "100%";
+    } else {
+      // Portrait mode: stacked vertically
+      sidebar.width = "100%";
+      sidebar.height = "30%";
+      sidebar.left = 0;
+      sidebar.top = 0;
+      
+      logs.left = 0;
+      logs.top = "30%";
+      logs.width = "100%";
+      logs.height = "70%";
+    }
+    
+    screen.render();
+  }
+
+  // Initial layout
+  updateLayout();
+
+  // Handle terminal resize
+  screen.on("resize", () => {
+    updateLayout();
+  });
 
   sidebar.setItems([...workspaces]);
 
