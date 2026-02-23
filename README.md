@@ -2,7 +2,9 @@
 
 Neovim-style TUI dashboard for Bun workspaces.
 
-BunTUI is a lightweight terminal UI that lets you navigate your monorepo workspaces from a sidebar and view live logs in a split panel layout. It’s designed for developers who want something simpler than heavy task runners — just clean navigation and logs.
+Bun-Wtui is a lightweight terminal UI that lets you navigate your monorepo workspaces from a sidebar and view live logs in a split panel layout. It’s designed for developers who want something simpler than heavy task runners — just clean navigation and logs.
+
+inspired by: [Turborepo](https://turborepo.dev/)
 
 ---
 
