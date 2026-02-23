@@ -14,12 +14,14 @@ inspired by: [Turborepo](https://turborepo.dev/)
 * Live log viewer for selected workspace
 * Restart selected workspace (`r`)
 * Stop selected workspace (`s`)
+* **Lint dependencies in overlay (`l`)**
+* **Fix dependency mismatches in overlay (`f`)**
 * Quit instantly (`q` or `Ctrl+C`)
 * Auto-detects Bun workspaces from `package.json`
 * Running status indicators (● running / — stopped)
 * ▌ Active workspace indicator
 * Works with any Bun monorepo
-* Dependency linting and auto-fixing via syncpack integration
+* Powered by syncpack for dependency management
 
 ---
 
@@ -112,14 +114,17 @@ No extra config required.
 
 ## Controls
 
-| Key    | Action                     |
-| ------ | -------------------------- |
-| ↑ / ↓  | Navigate workspaces        |
-| Enter  | Select workspace           |
-| r      | Restart selected workspace |
-| s      | Stop selected workspace    |
-| q      | Quit                       |
-| Ctrl+C | Quit                       |
+| Key    | Action                      |
+| ------ | --------------------------- |
+| ↑ / ↓  | Navigate workspaces         |
+| Enter  | Select workspace            |
+| r      | Restart selected workspace  |
+| s      | Stop selected workspace     |
+| l      | Lint dependencies (overlay) |
+| f      | Fix mismatches (overlay)    |
+| ESC    | Close overlay               |
+| q      | Quit                        |
+| Ctrl+C | Quit                        |
 
 ---
 

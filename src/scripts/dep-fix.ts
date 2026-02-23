@@ -1,5 +1,5 @@
-// Spawn syncpack lint process with piped output for TUI
-export function spawnLintProcess() {
+// Spawn syncpack fix process with piped output for TUI
+export function spawnFixProcess() {
   return Bun.spawn(["bunx", "syncpack", "lint", "--dependency-types", "prod,dev"], {
     stdout: "pipe",
     stderr: "pipe",
@@ -7,10 +7,10 @@ export function spawnLintProcess() {
   });
 }
 
-// Run syncpack lint for CLI
-export async function runLint() {
+// Run syncpack fix for CLI
+export async function runFix() {
   try {
-    console.info("🔍 Scanning dependencies for issues...\n");
+    console.log("🔧 Fixing dependency mismatches...\n");
     
     const proc = Bun.spawn(["bunx", "syncpack", "lint", "--dependency-types", "prod,dev"], {
       stdout: "inherit",

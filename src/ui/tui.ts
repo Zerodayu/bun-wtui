@@ -1,11 +1,13 @@
 import * as blessed from "blessed";
 import { ProcessManager } from "../core/proc-manager";
 import type { WorkspaceList } from "../core/types";
+import { spawnLintProcess } from "../scripts/lint";
+import { spawnFixProcess } from "../scripts/dep-fix";
 
 export function createTUI(workspaces: WorkspaceList): void {
   const screen = blessed.screen({
     smartCSR: true,
-    title: "BunTUI"
+    title: "BunWtui"
   });
 
   const MIN_WIDTH_FOR_LANDSCAPE = 80;
@@ -34,13 +36,35 @@ export function createTUI(workspaces: WorkspaceList): void {
     left: 0,
     width: "100%",
     height: 1,
-    content: "↑/↓: Navigate | Enter: Select | r: Restart | s: Stop | q/Ctrl+C: Quit",
+    content: "↑/↓: Navigate | Enter: Select | r: Restart | s: Stop | l: Lint | f: Fix | ESC: Close | q: Quit",
     align: "center"
   });
 
   screen.append(sidebar);
   screen.append(logs);
   screen.append(footer);
+
+  // Create overlay for syncpack commands
+  const overlay = blessed.box({
+    top: "center",
+    left: "center",
+    width: "80%",
+    height: "80%",
+    label: " Syncpack ",
+    border: "line",
+    scrollable: true,
+    alwaysScroll: true,
+    hidden: true,
+    style: {
+      border: {
+        fg: "cyan"
+      }
+    },
+    keys: true,
+    vi: true
+  });
+
+  screen.append(overlay);
 
   // Function to update layout based on screen width
   function updateLayout() {
@@ -123,6 +147,77 @@ export function createTUI(workspaces: WorkspaceList): void {
       screen.render();
     }
   }, 100); // Update every 100ms
+
+  // Helper function to run syncpack commands in overlay
+  async function runSyncpackCommand(command: "lint" | "fix", label: string) {
+    const emoji = command === "lint" ? "🔍" : "🔧";
+    const action = command === "lint" ? "Scanning" : "Fixing";
+    
+    overlay.setLabel(` ${label} (ESC to close) `);
+    overlay.setContent(`${emoji} ${action} dependencies...\n\n`);
+    overlay.show();
+    overlay.focus();
+    screen.render();
+
+    let output = `${emoji} ${action} dependencies...\n\n`;
+
+    try {
+      // Use helper functions from scripts folder
+      const proc = command === "lint" ? spawnLintProcess() : spawnFixProcess();
+
+      const decoder = new TextDecoder();
+      
+      // Stream stdout
+      if (proc.stdout) {
+        for await (const chunk of proc.stdout) {
+          const text = decoder.decode(chunk);
+          output += text;
+          overlay.setContent(output);
+          overlay.setScrollPerc(100);
+          screen.render();
+        }
+      }
+
+      // Stream stderr
+      if (proc.stderr) {
+        for await (const chunk of proc.stderr) {
+          const text = decoder.decode(chunk);
+          output += text;
+          overlay.setContent(output);
+          overlay.setScrollPerc(100);
+          screen.render();
+        }
+      }
+
+      await proc.exited;
+      
+      output += `\n\n✓ Done! Press ESC to close.`;
+      overlay.setContent(output);
+      overlay.setScrollPerc(100);
+      screen.render();
+    } catch (err: any) {
+      output += `\n\n✗ Error: ${err.message}\n\nPress ESC to close.`;
+      overlay.setContent(output);
+      screen.render();
+    }
+  }
+
+  // Close overlay and return focus to sidebar
+  function closeOverlay() {
+    overlay.hide();
+    sidebar.focus();
+    screen.render();
+  }
+
+  overlay.key(["escape", "q"], closeOverlay);
+
+  screen.key(["l"], () => {
+    runSyncpackCommand("lint", "Dependency Lint");
+  });
+
+  screen.key(["f"], () => {
+    runSyncpackCommand("fix", "Fix Dependencies");
+  });
 
   screen.key(["r"], () => {
     if (!currentWorkspace) return;
