@@ -221,3 +221,19 @@ Run:
 ```bash
 bun bun-wtui
 ```
+---
+
+## Publishing
+
+#### Bump Version
+
+```bash
+npm version patch  # 1.0.1 -> 1.0.2
+npm version minor  # 1.0.1 -> 1.1.0
+npm version major  # 1.0.1 -> 2.0.0
+```
+
+#### Publish to npm
+```
+npm publish
+```
