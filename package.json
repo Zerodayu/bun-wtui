@@ -11,8 +11,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "bun build src/index.ts --outfile dist/index.js --target bun --bundle --minify",
-    "postbuild": "echo '#!/usr/bin/env bun' | cat - dist/index.js > dist/index.temp.js && mv dist/index.temp.js dist/index.js && chmod +x dist/index.js",
+    "build": "bun build src/index.ts --outfile dist/index.js --target bun --external blessed && chmod +x dist/index.js",
     "prepublishOnly": "bun run build"
   },
   "keywords": [
