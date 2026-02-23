@@ -121,7 +121,7 @@ No extra config required.
 
 ## Configuration (Optional)
 
-BunTUI works with zero configuration, but you can customize behavior by creating a config file in your project root:
+Bun-Wtui works with zero configuration, but you can customize behavior by creating a config file in your project root:
 
 - `bun-wtui.json`
 - `.bun-wtui.json`
@@ -199,7 +199,7 @@ Each workspace must have a `dev` script:
 
 ## Philosophy
 
-BunTUI is not a task graph engine.
+Bun-Wtui is not a task graph engine.
 
 It does not cache builds.
 It does not optimize pipelines.
