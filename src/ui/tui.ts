@@ -91,7 +91,6 @@ export function createTUI(workspaces: WorkspaceList): void {
       const isRunning = proc?.running || false;
       const statusIndicator = isRunning ? "●" : "—";
       const activeIndicator = ws === currentWorkspace ? "▌" : " ";
-      // const borderRight = ws === currentWorkspace ? " ▌" : "";
       return `${activeIndicator} ${statusIndicator} ${ws}`;
     });
     sidebar.setItems(items);

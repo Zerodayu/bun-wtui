@@ -1,8 +1,4 @@
-Here’s a clean, professional `README.md` you can use for your project.
 
-You can copy this directly into your repo.
-
----
 
 # Bun-Wtui
 
@@ -14,20 +10,19 @@ BunTUI is a lightweight terminal UI that lets you navigate your monorepo workspa
 
 ## ✨ Features
 
-* 🧭 Sidebar workspace navigation (arrow keys / vi keys)
-* 📜 Live log viewer for selected workspace
-* 🔁 Restart selected workspace (`r`)
-* 🛑 Stop selected workspace (`s`)
-* ❌ Quit instantly (`q` or `Ctrl+C`)
-* 🔍 Auto-detects Bun workspaces from `package.json`
-* 📊 Running status indicators (● running / — stopped)
-* ▶️ Active workspace indicator
-* ⚡ Lightweight and fast
-* 🧩 Works with any Bun monorepo
+* Sidebar workspace navigation (↑/↓)
+* Live log viewer for selected workspace
+* Restart selected workspace (`r`)
+* Stop selected workspace (`s`)
+* Quit instantly (`q` or `Ctrl+C`)
+* Auto-detects Bun workspaces from `package.json`
+* Running status indicators (● running / — stopped)
+* ▌ Active workspace indicator
+* Works with any Bun monorepo
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### Option 1 — Install Globally
 
@@ -81,7 +76,7 @@ No extra config required.
 
 ---
 
-## 🧭 Controls
+## Controls
 
 | Key    | Action                     |
 | ------ | -------------------------- |
@@ -94,7 +89,7 @@ No extra config required.
 
 ---
 
-## 📁 Supported Workspace Format
+## Supported Workspace Format
 
 Example:
 
@@ -119,7 +114,7 @@ Each workspace must have a `dev` script:
 
 ---
 
-## 🎯 Philosophy
+## Philosophy
 
 BunTUI is not a task graph engine.
 
@@ -137,9 +132,8 @@ Minimal. Focused. Fast.
 
 ---
 
-## 🚀 Roadmap
+## Roadmap
 
-* [x] Running status indicators (● / ○)
 * [ ] Memory usage display
 * [ ] Config file support
 * [ ] Custom script flag (`--script build`)
