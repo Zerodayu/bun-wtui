@@ -20,6 +20,11 @@ BunTUI is a lightweight terminal UI that lets you navigate your monorepo workspa
 
 ---
 
+## Examples
+
+![BunTUI Dashboard](./examples/example-img.png)
+<video src="./examples/example-vid.mp4" controls></video>
+
 ## Installation
 
 ```bash
