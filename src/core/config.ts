@@ -11,6 +11,7 @@ export interface Config {
   workspace: {
     excludeWorkspaces: string[];
     autoDetectWorkspaces: boolean;
+    treeViewEnabled: boolean;
   };
   syncpack: {
     dependencyTypes: string[];
@@ -32,6 +33,7 @@ const DEFAULT_CONFIG: Config = {
   workspace: {
     excludeWorkspaces: [],
     autoDetectWorkspaces: true,
+    treeViewEnabled: false,
   },
   syncpack: {
     dependencyTypes: ["prod", "dev"],

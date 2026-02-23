@@ -11,6 +11,7 @@ inspired by: [Turborepo](https://turborepo.dev/)
 ## Features
 
 * Sidebar workspace navigation (↑/↓)
+* Tree-style workspace explorer (optional)
 * Live log viewer for selected workspace
 * Restart selected workspace (`r`)
 * Stop selected workspace (`s`)
@@ -20,6 +21,7 @@ inspired by: [Turborepo](https://turborepo.dev/)
 * Auto-detects Bun workspaces from `package.json`
 * Running status indicators (● running / — stopped)
 * ▌ Active workspace indicator
+* Expandable/collapsible directory nodes in tree view
 * Works with any Bun monorepo
 * Powered by syncpack for dependency management
 
@@ -87,6 +89,8 @@ No extra config required.
 
 ## Controls
 
+### List View (default)
+
 | Key    | Action                      |
 | ------ | --------------------------- |
 | ↑ / ↓  | Navigate workspaces         |
@@ -98,6 +102,20 @@ No extra config required.
 | ESC    | Close overlay               |
 | q      | Quit                        |
 | Ctrl+C | Quit                        |
+
+### Tree View (when enabled)
+
+| Key    | Action                         |
+| ------ | ------------------------------ |
+| ↑ / ↓  | Navigate workspaces/folders    |
+| Enter  | Select workspace or expand dir |
+| r      | Restart selected workspace     |
+| s      | Stop selected workspace        |
+| l      | Lint dependencies (overlay)    |
+| f      | Fix mismatches (overlay)       |
+| ESC    | Close overlay                  |
+| q      | Quit                           |
+| Ctrl+C | Quit                           |
 
 ---
 
@@ -121,7 +139,8 @@ BunTUI works with zero configuration, but you can customize behavior by creating
   },
   "workspace": {
     "excludeWorkspaces": [],
-    "autoDetectWorkspaces": true
+    "autoDetectWorkspaces": true,
+    "treeViewEnabled": false
   },
   "syncpack": {
     "dependencyTypes": ["prod", "dev"],
@@ -142,8 +161,12 @@ BunTUI works with zero configuration, but you can customize behavior by creating
 | `ui.sidebarWidth` | number | 25 | Sidebar width percentage in landscape mode |
 | `ui.showTimestamps` | boolean | false | Add timestamps to log entries |
 | `workspace.excludeWorkspaces` | string[] | [] | Workspace paths to hide from sidebar |
+| `workspace.autoDetectWorkspaces` | boolean | true | Automatically detect workspaces from package.json |
+| `workspace.treeViewEnabled` | boolean | false | Enable hierarchical tree view for workspaces |
 | `syncpack.dependencyTypes` | string[] | ["prod", "dev"] | Dependency types to check |
+| `syncpack.autoLintOnStart` | boolean | false | Automatically run lint on startup |
 | `behavior.logLevel` | string | "normal" | Log verbosity (verbose/normal/quiet) |
+| `behavior.rememberLastWorkspace` | boolean | false | Remember last selected workspace |
 
 See [bun-wtui.json.example](./bun-wtui.json.example) for a complete example.
 
@@ -197,7 +220,7 @@ Minimal. Focused. Fast.
 * [ ] Memory usage display
 * [x] Config file support
 * [ ] Custom script flag (`--script build`)
-* [ ] Tree-style workspace explorer
+* [x] Tree-style workspace explorer
 
 ---
 
