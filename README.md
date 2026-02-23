@@ -6,7 +6,7 @@ BunTUI is a lightweight terminal UI that lets you navigate your monorepo workspa
 
 ---
 
-## ✨ Features
+## Features
 
 * Sidebar workspace navigation (↑/↓)
 * Live log viewer for selected workspace
@@ -60,7 +60,7 @@ bun run dev
 
 ---
 
-## 🏗 How It Works
+## How It Works?
 
 BunTUI:
 
