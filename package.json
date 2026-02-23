@@ -1,6 +1,6 @@
 {
   "name": "bun-wtui",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Neovim-style TUI dashboard for Bun workspaces",
   "type": "module",
   "module": "index.ts",
