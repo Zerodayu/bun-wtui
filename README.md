@@ -158,7 +158,7 @@ Minimal. Focused. Fast.
 Build locally:
 
 ```bash
-bun run build && bun link
+bun run test
 ```
 
 Test:
