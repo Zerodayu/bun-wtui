@@ -16,7 +16,9 @@ export function createTUI(workspaces: WorkspaceList): void {
     vi: true,
     border: "line",
     style: {
-      selected: { bg: "blue" }
+      selected: { 
+        inverse: true
+      }
     }
   });
 
@@ -27,8 +29,18 @@ export function createTUI(workspaces: WorkspaceList): void {
     alwaysScroll: true
   });
 
+  const footer = blessed.box({
+    bottom: 0,
+    left: 0,
+    width: "100%",
+    height: 1,
+    content: "↑/↓: Navigate | Enter: Select | r: Restart | s: Stop | q/Ctrl+C: Quit",
+    align: "center"
+  });
+
   screen.append(sidebar);
   screen.append(logs);
+  screen.append(footer);
 
   // Function to update layout based on screen width
   function updateLayout() {
@@ -37,14 +49,14 @@ export function createTUI(workspaces: WorkspaceList): void {
     if (width >= MIN_WIDTH_FOR_LANDSCAPE) {
       // Landscape mode: side by side
       sidebar.width = "25%";
-      sidebar.height = "100%";
+      sidebar.height = "100%-1";
       sidebar.left = 0;
       sidebar.top = 0;
       
       logs.left = "25%";
       logs.top = 0;
       logs.width = "75%";
-      logs.height = "100%";
+      logs.height = "100%-1";
     } else {
       // Portrait mode: stacked vertically
       sidebar.width = "100%";
@@ -55,7 +67,7 @@ export function createTUI(workspaces: WorkspaceList): void {
       logs.left = 0;
       logs.top = "30%";
       logs.width = "100%";
-      logs.height = "70%";
+      logs.height = "70%-1";
     }
     
     screen.render();
@@ -69,10 +81,25 @@ export function createTUI(workspaces: WorkspaceList): void {
     updateLayout();
   });
 
-  sidebar.setItems([...workspaces]);
-
   const manager = new ProcessManager("dev");
   let currentWorkspace: string | null = null;
+
+  // Function to update sidebar with status indicators
+  function updateSidebar() {
+    const items = workspaces.map((ws) => {
+      const proc = manager.get(ws);
+      const isRunning = proc?.running || false;
+      const statusIndicator = isRunning ? "●" : "—";
+      const activeIndicator = ws === currentWorkspace ? "▌" : " ";
+      // const borderRight = ws === currentWorkspace ? " ▌" : "";
+      return `${activeIndicator} ${statusIndicator} ${ws}`;
+    });
+    sidebar.setItems(items);
+    screen.render();
+  }
+
+  // Initial sidebar setup
+  updateSidebar();
 
   sidebar.on("select", (_item: blessed.Widgets.BlessedElement, index: number) => {
     const ws = workspaces[index];
@@ -80,6 +107,7 @@ export function createTUI(workspaces: WorkspaceList): void {
 
     currentWorkspace = ws;
     manager.start(ws, ws);
+    updateSidebar();
 
     logs.setContent(manager.getBuffer(ws));
     screen.render();
@@ -87,6 +115,8 @@ export function createTUI(workspaces: WorkspaceList): void {
 
   // Live log updates
   const logInterval = setInterval(() => {
+    updateSidebar();
+    
     if (currentWorkspace) {
       const buffer = manager.getBuffer(currentWorkspace);
       logs.setContent(buffer);
@@ -98,6 +128,13 @@ export function createTUI(workspaces: WorkspaceList): void {
   screen.key(["r"], () => {
     if (!currentWorkspace) return;
     manager.restart(currentWorkspace);
+    updateSidebar();
+  });
+
+  screen.key(["s"], () => {
+    if (!currentWorkspace) return;
+    manager.stop(currentWorkspace);
+    updateSidebar();
   });
 
   screen.key(["q", "C-c"], () => {

@@ -17,8 +17,11 @@ BunTUI is a lightweight terminal UI that lets you navigate your monorepo workspa
 * 🧭 Sidebar workspace navigation (arrow keys / vi keys)
 * 📜 Live log viewer for selected workspace
 * 🔁 Restart selected workspace (`r`)
+* 🛑 Stop selected workspace (`s`)
 * ❌ Quit instantly (`q` or `Ctrl+C`)
 * 🔍 Auto-detects Bun workspaces from `package.json`
+* 📊 Running status indicators (● running / — stopped)
+* ▶️ Active workspace indicator
 * ⚡ Lightweight and fast
 * 🧩 Works with any Bun monorepo
 
@@ -85,6 +88,7 @@ No extra config required.
 | ↑ / ↓  | Navigate workspaces        |
 | Enter  | Select workspace           |
 | r      | Restart selected workspace |
+| s      | Stop selected workspace    |
 | q      | Quit                       |
 | Ctrl+C | Quit                       |
 
@@ -135,7 +139,7 @@ Minimal. Focused. Fast.
 
 ## 🚀 Roadmap
 
-* [ ] Running status indicators (● / ✖)
+* [x] Running status indicators (● / ○)
 * [ ] Memory usage display
 * [ ] Config file support
 * [ ] Custom script flag (`--script build`)
