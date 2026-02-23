@@ -1,5 +1,3 @@
-
-
 # Bun-Wtui
 
 Neovim-style TUI dashboard for Bun workspaces.
@@ -160,11 +158,3 @@ Run:
 ```bash
 bun-wtui
 ```
-
----
-
-## 📜 License
-
-MIT
-
----
