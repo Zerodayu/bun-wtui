@@ -29,12 +29,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Zerodayu/bun-wtui.git"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/Zerodayu/bun-wtui.git/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/Zerodayu/bun-wtui.git#readme",
   "devDependencies": {
     "@types/bun": "latest"
   },
