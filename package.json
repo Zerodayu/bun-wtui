@@ -1,0 +1,48 @@
+{
+  "name": "bun-wtui",
+  "version": "1.0.0",
+  "description": "Neovim-style TUI dashboard for Bun workspaces",
+  "type": "module",
+  "module": "index.ts",
+  "bin": {
+    "bun-wtui": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun build src/index.ts --outfile dist/index.js --target bun --bundle --minify",
+    "postbuild": "echo '#!/usr/bin/env bun' | cat - dist/index.js > dist/index.temp.js && mv dist/index.temp.js dist/index.js && chmod +x dist/index.js",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "bun",
+    "tui",
+    "monorepo",
+    "workspace",
+    "terminal",
+    "dashboard",
+    "blessed",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@types/blessed": "^0.1.27",
+    "blessed": "^0.1.81"
+  }
+}
